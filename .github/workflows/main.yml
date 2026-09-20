@@ -29,20 +29,12 @@ jobs:
 
       - name: Setup config files
         run: |
-          cp gradle.properties.example gradle.properties
-          cp local.properties.example local.properties
+          touch gradle.properties local.properties
           echo "TELEGRAM_APP_ID=33758413" >> local.properties
           echo "TELEGRAM_APP_HASH=e9fe420e4e170ff123fd27c3f63c440e" >> local.properties
           echo "RELEASE_KEY_ALIAS=androiddebugkey" >> gradle.properties
           echo "RELEASE_KEY_PASSWORD=android" >> gradle.properties
           echo "RELEASE_STORE_PASSWORD=android" >> gradle.properties
-          cat > /tmp/google-services.json << 'EOF'
-          {"project_info":{"project_id":"xgram","project_number":"1","firebase_url":"https://xgram.firebaseio.com","storage_bucket":"xgram.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:1:android:abc","android_client_info":{"package_name":"me.xgram.messenger"}},"api_key":[{"current_key":"test"}],"services":{"appinvite_service":{"other_platform_oauth_client":[]}}},{"client_info":{"mobilesdk_app_id":"1:1:android:def","android_client_info":{"package_name":"me.xgram.messenger.beta"}},"api_key":[{"current_key":"test"}],"services":{"appinvite_service":{"other_platform_oauth_client":[]}}}],"configuration_version":"1"}
-          EOF
-          cp /tmp/google-services.json TMessagesProj/google-services.json
-          cp /tmp/google-services.json TMessagesProj_App/google-services.json
-          cp /tmp/google-services.json TMessagesProj_AppStandalone/google-services.json
-
       - name: Enable buildConfig
         run: |
           sed -i '/android {/a\    buildFeatures { buildConfig true }' TMessagesProj/build.gradle
